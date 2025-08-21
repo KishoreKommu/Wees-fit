@@ -1,0 +1,342 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Wees Fit — Minimal Fitness Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f6f7fb;
+      --surface: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --primary: #7aa7c7;
+      --primary-600: #658eaa;
+      --accent: #b6e0dc;
+      --accent-2: #ffe6b3;
+      /* warm accent */
+      --accent-3: #f5c4d8;
+      /* pink accent */
+      --ring: rgba(122, 167, 199, .35);
+      --shadow: 0 6px 24px rgba(31, 41, 55, .06);
+      --radius: 16px;
+    }
+
+    body {
+      font-family: 'Inter', system-ui;
+      background: linear-gradient(120deg, #eef5ff, #eaf7f4, #fff5f5);
+      color: var(--text);
+    }
+
+    .app-navbar {
+      backdrop-filter: saturate(120%) blur(8px);
+      background: rgba(255, 255, 255, .9);
+      box-shadow: var(--shadow);
+    }
+
+    .brand-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    }
+
+    .section {
+      padding: clamp(48px, 6vw, 80px) 0;
+    }
+
+    .hero {
+      background: linear-gradient(180deg, var(--accent) 0%, #fff 100%);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      position: relative;
+    }
+
+    .hero-ink {
+      position: absolute;
+      inset: auto -40% -60% -40%;
+      height: 120%;
+      background: radial-gradient(50% 50% at 50% 50%, var(--accent-2) 0%, transparent 60%);
+      opacity: .3;
+    }
+
+    .btn-primary-soft {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #fff;
+    }
+
+    .btn-primary-soft:hover {
+      background: var(--primary-600);
+      border-color: var(--primary-600);
+    }
+
+    .card-soft {
+      background: var(--surface);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .muted {
+      color: var(--muted) !important;
+    }
+
+    /* testimonials colourful */
+    .testimonial-card {
+      border-left: 6px solid var(--primary);
+      background: linear-gradient(135deg, #fff, var(--accent-2), #fff);
+    }
+
+    .testimonial-card:nth-child(2) {
+      border-left-color: var(--accent);
+      background: linear-gradient(135deg, #fff, var(--accent), #fff);
+    }
+
+    .testimonial-card:nth-child(3) {
+      border-left-color: var(--accent-3);
+      background: linear-gradient(135deg, #fff, var(--accent-3), #fff);
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .fade-up {
+      animation: fadeUp .6s ease-out both;
+    }
+
+    .feature-card {
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      transition: transform .25s ease, box-shadow .25s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 32px rgba(31, 41, 55, .12);
+    }
+
+    .icon-circle {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .bg-gradient-primary {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+    }
+
+    .bg-gradient-success {
+      background: linear-gradient(135deg, #4ade80, #22c55e);
+    }
+
+    .bg-gradient-pink {
+      background: linear-gradient(135deg, var(--accent-3), #f472b6);
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <header class="app-navbar sticky-top">
+    <nav class="navbar navbar-expand-lg container py-3">
+      <a class="navbar-brand brand-badge" href="#">
+        <span class="brand-dot"></span>
+        <span>Wees Fit</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+          <li class="nav-item"><a class="nav-link" href="#dashboard">Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
+          <li class="nav-item"><a class="nav-link" href="#success">Transformations</a></li>
+          <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+          <li class="nav-item ms-lg-2">
+            <a href="{% url 'bmi_form' %}" class="btn btn-primary-soft px-3 py-2">Start Now</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section id="dashboard" class="section">
+      <div class="container">
+        <div class="p-4 p-lg-5 hero fade-up">
+          <div class="hero-ink"></div>
+          <div class="row align-items-center g-4">
+            <div class="col-lg-7">
+              <h1 class="display-5 fw-semibold mb-3">Welcome to Wees Fit</h1>
+              <p class="lead muted mb-4">A calm, colorful dashboard to track progress, follow plans, and stay
+                consistent.</p>
+              <div class="d-flex flex-wrap gap-2">
+                <!-- ✅ Button to BMI form -->
+                <a href="{% url 'bmi_form' %}" class="btn btn-primary-soft btn-lg px-4">Start Your Journey</a>
+
+                <!-- ✅ Smooth scroll to features -->
+                <a href="#features" class="btn btn-outline-secondary btn-lg px-4">Explore Features</a>
+              </div>
+            </div>
+            <div class="col-lg-5">
+              <div class="card card-soft p-4">
+                <h6 class="text-uppercase text-muted mb-3">Quote of the day</h6>
+                <p id="fitness-quote" class="fs-5 mb-0"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Features -->
+    <section id="features" class="section">
+      <div class="container">
+        <div class="text-center mb-5 fade-up">
+          <h2 class="fw-semibold">Features</h2>
+          <p class="muted">Everything you need to build a consistent fitness journey.</p>
+        </div>
+        <div class="row g-4">
+          <!-- Card 1 -->
+          <div class="col-md-4 fade-up">
+            <div class="card feature-card p-4 h-100 text-center">
+              <div class="icon-circle bg-gradient-primary mb-3 mx-auto">
+                <i class="bi bi-clipboard-check fs-3 text-white"></i>
+              </div>
+              <h5 class="fw-semibold mb-2">Personalized Plans</h5>
+              <p class="muted mb-3">Get fitness and diet plans based on your profile and goals.</p>
+              <a href="{% url 'personal_plans' %}" class="btn btn-sm btn-primary-soft">Explore Plans</a>
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="col-md-4 fade-up">
+            <div class="card feature-card p-4 h-100 text-center">
+              <div class="icon-circle bg-gradient-success mb-3 mx-auto">
+                <i class="bi bi-graph-up-arrow fs-3 text-white"></i>
+              </div>
+              <h5 class="fw-semibold mb-2">Progress Tracking</h5>
+              <p class="muted mb-3">Monitor weight, BMI, and fitness improvements over time.</p>
+              <a href="{% url 'track_progress' %}" class="btn btn-sm btn-primary-soft">Track Progress</a>
+            </div>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="col-md-4 fade-up">
+            <div class="card feature-card p-4 h-100 text-center">
+              <div class="icon-circle bg-gradient-pink mb-3 mx-auto">
+                <i class="bi bi-people fs-3 text-white"></i>
+              </div>
+              <h5 class="fw-semibold mb-2">Community Support</h5>
+              <p class="muted mb-3">Stay motivated with group challenges and shared progress.</p>
+              <a href="{% url 'community' %}" class="btn btn-sm btn-primary-soft">Join Community</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Transformations -->
+    <section id="success" class="section">
+      <div class="container">
+        <div class="text-center mb-4 mb-lg-5 fade-up">
+          <h2 class="fw-semibold">Client Transformations</h2>
+          <p class="muted mb-0">Real words from consistent habits.</p>
+        </div>
+        <div class="row g-4">
+          <div class="col-md-4 fade-up">
+            <div class="card card-soft testimonial-card p-4 h-100">
+              <p class="mb-3">“I never thought I could lose 15kg in 4 months. The clear plans and tracking made it
+                possible.”</p>
+              <p class="fw-semibold mb-0">– K. Manikanta</p>
+            </div>
+          </div>
+          <div class="col-md-4 fade-up">
+            <div class="card card-soft testimonial-card p-4 h-100">
+              <p class="mb-3">“The strength training plan helped me gain 10kg muscle mass. I feel stronger and more
+                confident.”</p>
+              <p class="fw-semibold mb-0">– Govardhan</p>
+            </div>
+          </div>
+          <div class="col-md-4 fade-up">
+            <div class="card card-soft testimonial-card p-4 h-100">
+              <p class="mb-3">“I improved my stamina and overall health. The community challenges kept me motivated
+                daily.”</p>
+              <p class="fw-semibold mb-0">– Bongu Vishnu</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section id="about" class="section bg-light">
+      <div class="container">
+        <div class="row align-items-center g-4">
+          <div class="col-lg-6 fade-up">
+            <h2 class="fw-semibold mb-3">About Wees Fit</h2>
+            <p class="muted mb-3">Wees Fit is your personalized fitness dashboard designed to keep your journey simple,
+              colorful, and motivating. Whether you want to lose weight, gain muscle, or just stay healthy — our plans
+              and tools adapt to your lifestyle.</p>
+            <p class="muted mb-4">With community challenges, progress tracking, and expert-designed plans, you’ll never
+              feel alone in your fitness journey.</p>
+            <a href="{% url 'bmi_form' %}" class="btn btn-primary-soft px-4">Get Started</a>
+          </div>
+          <div class="col-lg-6 fade-up">
+            <img src="{% static 'images/about.jpeg' %}" alt="Wees Fit About" class="img-fluid rounded shadow">
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="py-4 mt-5 border-top">
+    <div class="container text-center">
+      <p class="mb-1">&copy; 2025 Wees Fit. All rights reserved.</p>
+      <div class="d-flex justify-content-center gap-3 small">
+        <a href="#dashboard" class="text-muted">Home</a>
+        <a href="#features" class="text-muted">Features</a>
+        <a href="#success" class="text-muted">Transformations</a>
+        <a href="#about" class="text-muted">About</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const quotes = [
+      "The only bad workout is the one that didn’t happen.",
+      "Don’t limit your challenges. Challenge your limits.",
+      "Push yourself because no one else is going to do it for you.",
+      "Sweat is fat crying.",
+      "Discipline is choosing between what you want now and what you want most.",
+      "Fall in love with taking care of yourself – mind, body, and soul.",
+      "The body achieves what the mind believes.",
+      "A year from now, you’ll wish you had started today.",
+      "Small steps every day lead to big changes."
+    ];
+    document.getElementById("fitness-quote").innerText =
+      quotes[Math.floor(Math.random() * quotes.length)];
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

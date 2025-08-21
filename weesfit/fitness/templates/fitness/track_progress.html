@@ -1,0 +1,147 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Track Progress - Wees Fit</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      background: #f8f9fa;
+      color: #333;
+      font-family: 'Segoe UI', sans-serif;
+      padding: 60px 20px;
+    }
+
+    h2 {
+      color: #495057;
+      font-weight: 700;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .section-box {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      border-radius: 20px;
+      padding: 25px;
+      margin-bottom: 25px;
+      transition: all 0.3s ease;
+    }
+
+    .section-box:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .section-title {
+      font-weight: 600;
+      color: #212529;
+      margin-bottom: 1rem;
+      font-size: 1.3rem;
+    }
+
+    p {
+      color: #444;
+      font-size: 1rem;
+      line-height: 1.6;
+      display: flex;
+      align-items: center;
+    }
+
+    input[type="checkbox"] {
+      margin-right: 10px;
+      transform: scale(1.2);
+    }
+
+    #progress-container {
+      margin-top: 30px;
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(0,0,0,0.05);
+    }
+
+    #progress-bar {
+      height: 25px;
+      background: #4dabf7;
+      text-align: center;
+      line-height: 25px;
+      color: #fff;
+      font-weight: 600;
+      width: 0%;
+      transition: width 0.4s ease;
+    }
+
+    .btn-primary-soft {
+      background: #4dabf7;
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      padding: 10px 20px;
+      transition: 0.3s;
+      text-decoration: none;
+      font-weight: 500;
+      display: inline-block;
+    }
+
+    .btn-primary-soft:hover {
+      background: #339af0;
+      color: #fff;
+      box-shadow: 0 6px 16px rgba(51, 154, 240, 0.3);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Track Your Progress 📊</h2>
+
+    <!-- Daily Routines -->
+    <div class="section-box">
+      <div class="section-title">Daily Routines</div>
+      {% for routine in daily_routines %}
+        <p>
+          <input type="checkbox" class="task-checkbox" onchange="updateProgress()">
+          {{ routine }}
+        </p>
+      {% endfor %}
+    </div>
+
+    <!-- Health Tips -->
+    <div class="section-box">
+      <div class="section-title">Health Tips</div>
+      {% for tip in health_tips %}
+        <p>
+          <input type="checkbox" class="task-checkbox" onchange="updateProgress()">
+          {{ tip }}
+        </p>
+      {% endfor %}
+    </div>
+
+    <!-- Progress Bar -->
+    <div id="progress-container">
+      <div id="progress-bar">0%</div>
+    </div>
+
+    <div class="text-center mt-4">
+      <a href="{% url 'home' %}" class="btn-primary-soft">⬅ Back to Dashboard</a>
+    </div>
+  </div>
+
+  <script>
+    function updateProgress() {
+      const checkboxes = document.querySelectorAll('.task-checkbox');
+      const total = checkboxes.length;
+      let completed = 0;
+      checkboxes.forEach(cb => { if(cb.checked) completed++; });
+      const percent = Math.round((completed / total) * 100);
+      const progressBar = document.getElementById('progress-bar');
+      progressBar.style.width = percent + '%';
+      progressBar.innerText = percent + '%';
+    }
+  </script>
+</body>
+</html>

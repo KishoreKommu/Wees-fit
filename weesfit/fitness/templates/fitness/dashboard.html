@@ -1,0 +1,109 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wees Fit - Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(rgba(81, 78, 78, 0.5), rgba(54, 52, 52, 0.7)),
+                  url("{% static 'images/weesfit-bg.jpeg' %}") no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .glass-card {
+      backdrop-filter: blur(15px);
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 50px;
+      max-width: 700px;
+      width: 90%;
+      text-align: center;
+      color: white;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      animation: popIn 1s ease forwards;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: #ffffff;
+    }
+
+    h1 span {
+      color: #00c6ff;
+    }
+
+    p {
+      font-size: 1.2rem;
+      margin-bottom: 35px;
+      color: #e0e0e0;
+    }
+
+    .btn-next {
+      background: linear-gradient(to right, #00c6ff, #0072ff);
+      color: white;
+      border: none;
+      padding: 14px 35px;
+      border-radius: 30px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      transition: all 0.3s ease-in-out;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      text-decoration: none;
+    }
+
+    .btn-next:hover {
+      background: linear-gradient(to right, #0072ff, #00c6ff);
+      transform: scale(1.05);
+      color: #fff;
+    }
+
+    @keyframes popIn {
+      from {
+        transform: translateY(40px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .glass-card {
+        padding: 30px;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      p {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="glass-card">
+    <h1><span>Wees Fit</span> Dashboard 🏋️‍♂️</h1>
+    <p>Welcome back! Here's your personalized dashboard to track your fitness journey, view progress, and crush your goals.</p>
+    <a href="{% url 'dashboard' %}" class="btn btn-start">Start Your Journey</a>
+  </div>
+</body>
+</html>

@@ -1,0 +1,124 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ goal_title }} - Custom Plan | Wees Fit</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      background: #f8f9fa;  /* same as goals page */
+      color: #333;
+      font-family: 'Segoe UI', sans-serif;
+      padding: 60px 20px;
+    }
+
+    h1 {
+      color: #495057;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      font-size: 2.2rem;
+      text-align: center;
+    }
+
+    h3 {
+      color: #212529;
+      margin-bottom: 1rem;
+      font-weight: 600;
+      font-size: 1.3rem;
+    }
+
+    p, li {
+      color: #444;
+      line-height: 1.6;
+      font-size: 1rem;
+    }
+
+    .section-box {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(0,0,0,0.05);
+      border-radius: 20px;
+      padding: 25px;
+      margin-bottom: 25px;
+      transition: all 0.3s ease;
+    }
+
+    .section-box:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    .btn-primary-soft {
+      background: #4dabf7;
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      padding: 10px 20px;
+      transition: 0.3s;
+      text-decoration: none;
+      font-weight: 500;
+      display: inline-block;
+    }
+
+    .btn-primary-soft:hover {
+      background: #339af0;
+      color: #fff;
+      box-shadow: 0 6px 16px rgba(51, 154, 240, 0.3);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>{{ goal_title }}</h1>
+    <p class="lead text-center">{{ goal_intro }}</p>
+
+    <!-- Nutrition Section -->
+    <div class="section-box">
+      <h3>🥗 Nutrition Plan</h3>
+      <p>{{ nutrition_plan }}</p>
+    </div>
+
+    <!-- Workout Section -->
+    <div class="section-box">
+      <h3>🏋️ Workout Plan</h3>
+      <p>{{ workout_intro }}</p>
+      <ul>
+        {% for item in workout_plan %}
+          <li>{{ item }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <!-- Weekly Schedule -->
+    <div class="section-box">
+      <h3>📅 Weekly Schedule</h3>
+      <ul>
+        {% for day, activity in weekly_schedule.items %}
+          <li><strong>{{ day }}:</strong> {{ activity }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <!-- Tips & Motivation -->
+    <div class="section-box">
+      <h3>💡 Tips & Motivation</h3>
+      <ul>
+        {% for tip in tips %}
+          <li>{{ tip }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <div class="text-center mt-4">
+      <a href="{% url 'personal_plans' %}" class="btn-primary-soft">⬅ Back to Goals</a>
+    </div>
+  </div>
+</body>
+</html>

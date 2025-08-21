@@ -1,0 +1,90 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Wees Fit - Weight Monitor</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(to right, #f0f8ff, #e6f7ff);
+      font-family: 'Segoe UI', sans-serif;
+    }
+    .monitor-container {
+      max-width: 700px;
+      margin: 80px auto;
+      background: #fff;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      animation: fadeInUp 1s ease;
+    }
+    @keyframes fadeInUp {
+      from { transform: translateY(40px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    .monitor-title {
+      font-size: 2rem;
+      font-weight: 600;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .btn-track {
+      background-color: #00b894;
+      color: #fff;
+      transition: 0.3s;
+    }
+    .btn-track:hover {
+      background-color: #019875;
+    }
+    .history {
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container monitor-container">
+    <div class="monitor-title">Weight Monitor</div>
+    
+    <form method="post" action="">
+      {% csrf_token %}
+      <div class="mb-3">
+        <label for="weight" class="form-label">Enter Your Weight (kg)</label>
+        <input type="number" class="form-control" id="weight" name="weight" required min="1" step="0.1" placeholder="Eg: 65.5">
+      </div>
+      <div class="mb-3">
+        <label for="date" class="form-label">Date</label>
+        <input type="date" class="form-control" id="date" name="date" required>
+      </div>
+      <div class="text-center">
+        <button type="submit" class="btn btn-track px-4 py-2">Log Weight</button>
+      </div>
+    </form>
+
+    <div class="history">
+      <h5 class="text-center mt-4">📊 Your Previous Entries</h5>
+      <table class="table table-striped mt-3 text-center">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Weight (kg)</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for entry in weight_logs %}
+          <tr>
+            <td>{{ entry.date }}</td>
+            <td>{{ entry.weight }}</td>
+          </tr>
+          {% empty %}
+          <tr><td colspan="2">No entries yet.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</body>
+</html>
