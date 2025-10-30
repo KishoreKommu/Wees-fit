@@ -29,8 +29,9 @@ Design & Styling	TailwindCSS / Custom CSS
 Charts / Visualization	Chart.js
 Authentication	Django User Model (Login, Signup)
 Deployment Ready	Heroku / PythonAnywhere compatible
-4. Functional Modules
- 1. User Authentication
+
+5. Functional Modules
+User Authentication
 
 Users can sign up, log in, and log out securely.
 
@@ -38,7 +39,7 @@ Authentication handled via Django’s built-in User model.
 
 Each user gets a personalized dashboard linked to their fitness data.
 
- 2. Fitness Profile Setup
+Fitness Profile Setup
 
 Each user creates a FitnessProfile with details:
 
@@ -52,7 +53,7 @@ Fitness Goal (e.g., Weight Loss, Muscle Gain, Maintain Fitness)
 
 Profession (for activity level estimation)
 
- 3. BMI Calculation
+BMI Calculation
 
 The platform automatically computes BMI from the user’s height and weight.
 
@@ -60,7 +61,7 @@ Users get health insights (e.g., “Underweight”, “Healthy”, “Overweight
 
 Visual feedback using progress bars or charts.
 
- 4. Daily Routine Tracking
+Daily Routine Tracking
 
 Users log daily activities:
 
@@ -76,7 +77,7 @@ Each entry is stored in the DailyRoutine model.
 
 The dashboard displays progress for each metric per day/week.
 
- 5. Weight Logging
+Weight Logging
 
 Users can add new weight entries periodically.
 
@@ -84,7 +85,7 @@ A WeightLog model stores the user’s progress history.
 
 A graph visualizes progress over time (using Chart.js).
 
- 6. AI Fitness Insights
+AI Fitness Insights
 
 Provides smart suggestions based on logged data.
 
@@ -94,7 +95,7 @@ Example: “You’ve maintained a steady weight for 2 weeks — great consistenc
 
 Encourages users with positive reinforcement.
 
- 7. Progress Dashboard
+Progress Dashboard
 
 The dashboard combines all metrics visually:
 
