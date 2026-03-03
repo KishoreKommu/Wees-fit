@@ -1,0 +1,380 @@
+<!-- {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wees Fit | Pro Dashboard</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        :root {
+            --primary: #00e5ff;
+            --primary-glow: rgba(0, 229, 255, 0.4);
+            --bg-dark: #05070a;
+            --sidebar-bg: #0c0f14;
+            --card-bg: rgba(255, 255, 255, 0.04);
+            --border: rgba(255, 255, 255, 0.08);
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
+
+        /* --- Custom Scrollbar --- */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-dark); }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+
+        /* --- Sidebar Evolution --- */
+        .sidebar {
+            width: 280px;
+            background: var(--sidebar-bg);
+            border-right: 1px solid var(--border);
+            height: 100vh;
+            position: fixed;
+            display: flex;
+            flex-direction: column;
+            padding: 30px 20px;
+            z-index: 1000;
+        }
+
+        .brand-box {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0 10px 40px;
+        }
+
+        .brand-logo {
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(135deg, var(--primary), #0072ff);
+            border-radius: 10px;
+            display: grid;
+            place-items: center;
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+
+        .nav-label {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin: 25px 0 15px 10px;
+            font-weight: 700;
+        }
+
+        .nav-link {
+            color: var(--text-dim);
+            padding: 14px 18px;
+            border-radius: 14px;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .nav-link i { font-size: 1.2rem; }
+        
+        .nav-link:hover, .nav-link.active {
+            background: rgba(0, 229, 255, 0.08);
+            color: var(--primary);
+        }
+
+        .nav-link.active {
+            box-shadow: inset 0 0 0 1px var(--primary-glow);
+        }
+
+        /* --- Top Navigation --- */
+        .top-bar {
+            height: 80px;
+            margin-left: 280px;
+            padding: 0 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(5, 7, 10, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 999;
+        }
+
+        .search-box {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 8px 15px;
+            width: 300px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .search-box input {
+            background: transparent;
+            border: none;
+            color: white;
+            outline: none;
+            width: 100%;
+        }
+
+        /* --- Dashboard Content --- */
+        .main-wrapper {
+            margin-left: 280px;
+            padding: 40px;
+        }
+
+        .bento-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 28px;
+            padding: 28px;
+            height: 100%;
+            transition: 0.3s;
+        }
+
+        .bento-card:hover {
+            border-color: rgba(0, 229, 255, 0.2);
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 15px;
+            display: grid;
+            place-items: center;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .glass-btn {
+            background: var(--primary);
+            color: #000;
+            font-weight: 700;
+            border-radius: 14px;
+            padding: 10px 24px;
+            border: none;
+            transition: 0.3s;
+        }
+
+        .glass-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px var(--primary-glow);
+        }
+
+        /* --- Animation --- */
+        .fade-in { animation: fadeIn 0.8s ease-out; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 1100px) {
+            .sidebar { width: 80px; }
+            .sidebar span, .sidebar .nav-label, .brand-box h4 { display: none; }
+            .top-bar, .main-wrapper { margin-left: 80px; }
+        }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="brand-box">
+            <div class="brand-logo"><i class="bi bi-lightning-fill text-dark"></i></div>
+            <h4 class="mb-0 fw-bold">WEES<span class="text-primary">FIT</span></h4>
+        </div>
+
+        <p class="nav-label">Menu</p>
+        <nav>
+            <a href="#" class="nav-link active"><i class="bi bi-grid-fill"></i><span>Overview</span></a>
+            <a href="{% url 'personal_plans' %}" class="nav-link"><i class="bi bi-activity"></i><span>Workouts</span></a>
+            <a href="{% url 'track_progress' %}" class="nav-link"><i class="bi bi-bar-chart-fill"></i><span>Analytics</span></a>
+            <a href="{% url 'community' %}" class="nav-link"><i class="bi bi-chat-heart-fill"></i><span>Community</span></a>
+        </nav>
+
+        <p class="nav-label">Account</p>
+        <nav>
+            <a href="#" class="nav-link"><i class="bi bi-person-circle"></i><span>Profile</span></a>
+            <a href="#" class="nav-link"><i class="bi bi-gear-fill"></i><span>Settings</span></a>
+        </nav>
+
+        <div class="mt-auto p-2">
+            <div class="bento-card p-3 d-flex align-items-center gap-3">
+                <div class="rounded-circle bg-primary" style="width:40px; height:40px;"></div>
+                <div class="overflow-hidden">
+                    <p class="mb-0 small fw-bold">Alex Hunter</p>
+                    <p class="mb-0 text-dim" style="font-size: 10px;">Pro Member</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <header class="top-bar">
+        <div class="search-box">
+            <i class="bi bi-search text-dim"></i>
+            <input type="text" placeholder="Search stats, routines...">
+        </div>
+        <div class="d-flex align-items-center gap-4">
+            <div class="position-relative">
+                <i class="bi bi-bell text-dim fs-5"></i>
+                <span class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle"></span>
+            </div>
+            <a href="{% url 'dashboard' %}" class="glass-btn">Upgrade to Pro</a>
+        </div>
+    </header>
+
+    <main class="main-wrapper fade-in">
+        <div class="d-flex justify-content-between align-items-end mb-5">
+            <div>
+                <h1 class="display-6 fw-bold">Athlete Dashboard</h1>
+                <p class="text-dim mb-0">Monday, March 3, 2026 • Welcome back!</p>
+            </div>
+            <div class="d-flex gap-2">
+                <button class="btn btn-outline-secondary rounded-pill px-4">Export Report</button>
+            </div>
+        </div>
+
+        <div class="row g-4 mb-4">
+            <div class="col-xl-3 col-md-6">
+                <div class="bento-card">
+                    <div class="stat-icon bg-info bg-opacity-10 text-info"><i class="bi bi-fire"></i></div>
+                    <p class="text-dim small fw-bold text-uppercase mb-1">Calories Burned</p>
+                    <h2 class="fw-bold mb-2">1,284 <small class="fs-6 text-muted">kcal</small></h2>
+                    <span class="text-success small"><i class="bi bi-graph-up"></i> +8% today</span>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6">
+                <div class="bento-card">
+                    <div class="stat-icon bg-primary bg-opacity-10 text-primary"><i class="bi bi-droplet-fill"></i></div>
+                    <p class="text-dim small fw-bold text-uppercase mb-1">Water Intake</p>
+                    <h2 class="fw-bold mb-2">2.4 <small class="fs-6 text-muted">Liters</small></h2>
+                    <div class="progress bg-dark" style="height: 6px;">
+                        <div class="progress-bar bg-primary" style="width: 65%"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6">
+                <div class="bento-card">
+                    <div class="stat-icon bg-danger bg-opacity-10 text-danger"><i class="bi bi-heart-pulse"></i></div>
+                    <p class="text-dim small fw-bold text-uppercase mb-1">Avg Heart Rate</p>
+                    <h2 class="fw-bold mb-2">68 <small class="fs-6 text-muted">bpm</small></h2>
+                    <span class="text-dim small">Resting: 62 bpm</span>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6">
+                <div class="bento-card">
+                    <div class="stat-icon bg-warning bg-opacity-10 text-warning"><i class="bi bi-lightning-fill"></i></div>
+                    <p class="text-dim small fw-bold text-uppercase mb-1">Sleep Score</p>
+                    <h2 class="fw-bold mb-2">85 <small class="fs-6 text-muted">/100</small></h2>
+                    <span class="text-warning small">Excellent Recovery</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-lg-8">
+                <div class="bento-card">
+                    <div class="d-flex justify-content-between align-items-start mb-4">
+                        <h5 class="fw-bold">Performance Analytics</h5>
+                        <div class="btn-group btn-group-sm">
+                            <button class="btn btn-outline-secondary active">Week</button>
+                            <button class="btn btn-outline-secondary">Month</button>
+                        </div>
+                    </div>
+                    <canvas id="performanceChart" height="280"></canvas>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="bento-card">
+                    <h5 class="fw-bold mb-4">Macro Distribution</h5>
+                    <canvas id="macroChart" height="200"></canvas>
+                    <div class="mt-4">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="text-dim">Protein</span>
+                            <span class="fw-bold">120g / 150g</span>
+                        </div>
+                        <div class="progress bg-dark mb-3" style="height: 4px;">
+                            <div class="progress-bar bg-primary" style="width: 80%"></div>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="text-dim">Carbs</span>
+                            <span class="fw-bold">180g / 250g</span>
+                        </div>
+                        <div class="progress bg-dark" style="height: 4px;">
+                            <div class="progress-bar bg-info" style="width: 72%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Line Chart for Performance
+        const perfCtx = document.getElementById('performanceChart').getContext('2d');
+        new Chart(perfCtx, {
+            type: 'line',
+            data: {
+                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                datasets: [{
+                    label: 'Activity Intensity',
+                    data: [65, 59, 80, 81, 56, 95, 70],
+                    borderColor: '#00e5ff',
+                    backgroundColor: 'rgba(0, 229, 255, 0.1)',
+                    fill: true,
+                    tension: 0.4,
+                    borderWidth: 3,
+                    pointRadius: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { display: false },
+                    x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+                }
+            }
+        });
+
+        // Doughnut Chart for Macros
+        const macroCtx = document.getElementById('macroChart').getContext('2d');
+        new Chart(macroCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Protein', 'Carbs', 'Fats'],
+                datasets: [{
+                    data: [30, 50, 20],
+                    backgroundColor: ['#00e5ff', '#0072ff', '#a855f7'],
+                    borderWidth: 0,
+                    hoverOffset: 10
+                }]
+            },
+            options: {
+                cutout: '80%',
+                plugins: { legend: { position: 'bottom', labels: { color: '#94a3b8', usePointStyle: true } } }
+            }
+        });
+    </script>
+</body>
+</html> -->

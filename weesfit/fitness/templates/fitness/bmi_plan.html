@@ -1,0 +1,292 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Your Personalized Blueprint | Wees Fit</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #6366f1;
+      --secondary: #0ea5e9;
+      --dark: #0f172a;
+      --surface: #ffffff;
+      --bg: #f8fafc;
+      --border: #e2e8f0;
+      --text-muted: #64748b;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg);
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.03) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(14, 165, 233, 0.03) 0px, transparent 50%);
+      color: var(--dark);
+      padding: 40px 20px;
+    }
+
+    /* --- Back Navigation --- */
+    .btn-nav-top {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background: white;
+      border: 1px solid var(--border);
+      padding: 10px 20px;
+      border-radius: 12px;
+      color: var(--dark);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.85rem;
+      z-index: 1000;
+      transition: 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-nav-top:hover {
+      background: var(--dark);
+      color: white;
+      transform: translateX(-5px);
+    }
+
+    /* --- Main Container --- */
+    .blueprint-wrapper {
+      max-width: 1000px;
+      margin: 60px auto;
+    }
+
+    .header-section {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .header-section h1 {
+      font-weight: 800;
+      font-size: 2.5rem;
+      letter-spacing: -1.5px;
+      color: var(--dark);
+    }
+
+    .header-section p {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+    }
+
+    /* --- Plan Sections (Bento Cards) --- */
+    .bento-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    .bento-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      padding: 35px;
+      box-shadow: 0 10px 30px -10px rgba(0,0,0,0.04);
+      transition: 0.3s;
+    }
+
+    .bento-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--primary);
+      box-shadow: 0 20px 40px -15px rgba(99, 102, 241, 0.1);
+    }
+
+    .icon-header {
+      width: 50px;
+      height: 50px;
+      background: rgba(99, 102, 241, 0.1);
+      color: var(--primary);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+    }
+
+    .bento-card h3 {
+      font-weight: 700;
+      font-size: 1.25rem;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* --- Lists --- */
+    .blueprint-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .blueprint-list li {
+      padding: 12px 0;
+      border-bottom: 1px solid #f1f5f9;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.95rem;
+      color: #334155;
+    }
+
+    .blueprint-list li:last-child { border-bottom: none; }
+
+    .blueprint-list li i {
+      color: var(--primary);
+      font-size: 1.1rem;
+    }
+
+    /* --- Status Pill --- */
+    .status-pill {
+      display: inline-block;
+      padding: 6px 16px;
+      border-radius: 100px;
+      font-weight: 800;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      background: rgba(99, 102, 241, 0.1);
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+
+    /* --- CTA Section --- */
+    .footer-actions {
+      text-align: center;
+      margin-top: 60px;
+      padding-top: 40px;
+      border-top: 1px solid var(--border);
+    }
+
+    .btn-elite {
+      background: var(--dark);
+      color: white;
+      padding: 16px 40px;
+      border-radius: 16px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: 0.3s;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-elite:hover {
+      background: var(--primary);
+      transform: translateY(-2px);
+      color: white;
+    }
+
+    @media (max-width: 768px) {
+      .header-section h1 { font-size: 2rem; }
+      .blueprint-wrapper { margin-top: 80px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <a href="{% url 'home' %}" class="btn-nav-top">
+    <i class="bi bi-house-door-fill"></i> Home
+  </a>
+
+  <div class="blueprint-wrapper">
+    <div class="header-section">
+      <div class="status-pill">Analysis Complete</div>
+      <h1>Performance Blueprint</h1>
+      <p>Customized protocol for BMI Score: <strong>{{ bmi }}</strong></p>
+    </div>
+
+    {% if bmi %}
+    <div class="bento-row">
+      
+      <div class="bento-card">
+        <div class="icon-header"><i class="bi bi-egg-fried"></i></div>
+        <h3>Nutrition & Macros</h3>
+        <ul class="blueprint-list">
+          {% if bmi < 18.5 %}
+            <li><i class="bi bi-check-circle-fill"></i> 2600–3000 kcal (Surplus)</li>
+            <li><i class="bi bi-check-circle-fill"></i> Protein: 1.6–2 g/kg</li>
+            <li><i class="bi bi-check-circle-fill"></i> Carbs: 55% / Fats: 30%</li>
+          {% elif bmi < 25.5 %}
+            <li><i class="bi bi-check-circle-fill"></i> 2200–2400 kcal (Maintain)</li>
+            <li><i class="bi bi-check-circle-fill"></i> Protein: 1.2–1.5 g/kg</li>
+            <li><i class="bi bi-check-circle-fill"></i> Balanced Micros from whole foods</li>
+          {% elif bmi < 29.9 %}
+            <li><i class="bi bi-check-circle-fill"></i> 1800–2000 kcal (Deficit)</li>
+            <li><i class="bi bi-check-circle-fill"></i> Protein: 1.5 g/kg</li>
+            <li><i class="bi bi-check-circle-fill"></i> Low Sugar / High Fiber</li>
+          {% else %}
+            <li><i class="bi bi-check-circle-fill"></i> 1500–1800 kcal (Deficit)</li>
+            <li><i class="bi bi-check-circle-fill"></i> Protein: 1.5–2 g/kg</li>
+            <li><i class="bi bi-check-circle-fill"></i> Complex Carbs Only</li>
+          {% endif %}
+        </ul>
+      </div>
+
+      <div class="bento-card">
+        <div class="icon-header"><i class="bi bi-lightning-charge-fill"></i></div>
+        <h3>Training Protocol</h3>
+        <ul class="blueprint-list">
+          {% if bmi < 18.5 %}
+            <li><i class="bi bi-check-circle-fill"></i> Strength Training: 4-5x/week</li>
+            <li><i class="bi bi-check-circle-fill"></i> Heavy Compound Lifts</li>
+            <li><i class="bi bi-check-circle-fill"></i> Minimal Cardio (15 min)</li>
+          {% elif bmi < 25.5 %}
+            <li><i class="bi bi-check-circle-fill"></i> Hybrid Training: 3-4x/week</li>
+            <li><i class="bi bi-check-circle-fill"></i> 30 min Moderate Cardio</li>
+            <li><i class="bi bi-check-circle-fill"></i> Calisthenics & Mobility</li>
+          {% else %}
+            <li><i class="bi bi-check-circle-fill"></i> Fat Oxidation: 5-6x/week</li>
+            <li><i class="bi bi-check-circle-fill"></i> 40-60 min Brisk Walking</li>
+            <li><i class="bi bi-check-circle-fill"></i> High Intensity Interval (HIIT)</li>
+          {% endif %}
+        </ul>
+      </div>
+
+      <div class="bento-card">
+        <div class="icon-header"><i class="bi bi-moon-stars-fill"></i></div>
+        <h3>Bio-Optimization</h3>
+        <ul class="blueprint-list">
+          <li><i class="bi bi-check-circle-fill"></i> Hydration: 3–4 Liters/Day</li>
+          <li><i class="bi bi-check-circle-fill"></i> Sleep: 7–9 Hours (Deep Recovery)</li>
+          <li><i class="bi bi-check-circle-fill"></i> Vitamins: C, D & Calcium</li>
+        </ul>
+      </div>
+
+    </div>
+    {% else %}
+    <div class="bento-card text-center">
+      <i class="bi bi-exclamation-triangle fs-1 text-warning"></i>
+      <h3 class="mt-3">No Analysis Data Found</h3>
+      <p>Please complete the BMI assessment to generate your blueprint.</p>
+    </div>
+    {% endif %}
+
+    <div class="footer-actions">
+      <a href="{% url 'bmi_form' %}" class="btn-elite">
+        Restart Assessment <i class="bi bi-arrow-repeat"></i>
+      </a>
+      <p class="mt-4 small text-muted">
+        <i class="bi bi-info-circle me-1"></i> 
+        This is an AI-generated protocol. For medical conditions, please consult a certified physician.
+      </p>
+    </div>
+  </div>
+
+</body>
+</html>

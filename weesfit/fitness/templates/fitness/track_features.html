@@ -1,0 +1,241 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Analytics Hub | Wees Fit</title>
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #6366f1;
+      --secondary: #0ea5e9;
+      --bg-dark: #0f172a;
+      --surface: #ffffff;
+      --border: #e2e8f0;
+      --accent-glow: rgba(99, 102, 241, 0.1);
+    }
+
+    body {
+      background-color: #f8fafc;
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.05) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(14, 165, 233, 0.05) 0px, transparent 50%);
+      color: var(--bg-dark);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      padding-bottom: 80px;
+    }
+
+    /* --- Back Button --- */
+    .btn-floating-back {
+      position: fixed;
+      top: 30px;
+      left: 30px;
+      background: white;
+      border: 1px solid var(--border);
+      padding: 10px 20px;
+      border-radius: 14px;
+      color: var(--bg-dark);
+      text-decoration: none;
+      font-weight: 700;
+      transition: 0.3s;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05);
+    }
+
+    .btn-floating-back:hover {
+      background: var(--bg-dark);
+      color: white;
+      transform: translateX(-5px);
+    }
+
+    /* --- Hub Header --- */
+    .hub-header {
+      padding: 100px 0 60px;
+      text-align: center;
+    }
+
+    .hub-header h1 {
+      font-weight: 800;
+      letter-spacing: -2px;
+      font-size: 3.5rem;
+      margin-bottom: 15px;
+    }
+
+    /* --- Bento Grid Analytics --- */
+    .bento-container {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      grid-template-rows: auto;
+      gap: 24px;
+    }
+
+    .bento-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 32px;
+      padding: 35px;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .bento-item:hover {
+      transform: translateY(-8px);
+      border-color: var(--primary);
+      box-shadow: 0 25px 50px -12px rgba(99, 102, 241, 0.15);
+    }
+
+    /* Column Spans */
+    .span-4 { grid-column: span 4; }
+    .span-6 { grid-column: span 6; }
+    .span-8 { grid-column: span 8; }
+
+    .icon-box {
+      width: 50px;
+      height: 50px;
+      background: var(--accent-glow);
+      color: var(--primary);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+    }
+
+    .bento-item h3 {
+      font-weight: 800;
+      font-size: 1.4rem;
+      margin-bottom: 10px;
+    }
+
+    .bento-item p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 20px;
+    }
+
+    /* --- Mini Graph Visual --- */
+    .mini-graph {
+      height: 60px;
+      display: flex;
+      align-items: flex-end;
+      gap: 4px;
+    }
+
+    .bar {
+      flex: 1;
+      background: var(--secondary);
+      border-radius: 4px;
+      opacity: 0.3;
+    }
+
+    .bar-active { background: var(--primary); opacity: 1; }
+
+    /* --- Tip Cards --- */
+    .tip-card {
+      background: linear-gradient(135deg, var(--bg-dark), #1e293b);
+      color: white;
+      border: none;
+    }
+
+    .tip-card p { color: rgba(255,255,255,0.7); }
+
+    @media (max-width: 992px) {
+      .span-4, .span-6, .span-8 { grid-column: span 12; }
+      .hub-header h1 { font-size: 2.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <a href="{% url 'home' %}" class="btn-floating-back">
+    <i class="bi bi-arrow-left"></i> Dashboard
+  </a>
+
+  <div class="container">
+    <header class="hub-header" data-aos="fade-down">
+      <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill mb-3 fw-bold">Performance Lab</span>
+      <h1>Track Your <span class="text-primary">Progress</span></h1>
+      <p class="text-muted fs-5">Detailed analysis of your body composition and daily vitals.</p>
+    </header>
+
+    <div class="bento-container">
+      
+      <a href="{% url 'bmi_calculator' %}" class="bento-item span-4" data-aos="fade-up">
+        <div>
+          <div class="icon-box"><i class="bi bi-calculator"></i></div>
+          <h3>BMI Calculator</h3>
+          <p>Analyze your body mass index based on real-time metrics.</p>
+        </div>
+        <div class="mini-graph">
+          <div class="bar" style="height: 40%"></div>
+          <div class="bar" style="height: 60%"></div>
+          <div class="bar-active" style="height: 85%"></div>
+          <div class="bar" style="height: 50%"></div>
+        </div>
+      </a>
+
+      <a href="{% url 'weight_monitor' %}" class="bento-item span-4" data-aos="fade-up" data-aos-delay="100">
+        <div>
+          <div class="icon-box text-success"><i class="bi bi-speedometer2"></i></div>
+          <h3>Weight Monitor</h3>
+          <p>Log daily weigh-ins and visualize your weight velocity.</p>
+        </div>
+        <div class="d-flex align-items-baseline gap-2">
+          <span class="fs-2 fw-bold text-dark">-2.4</span>
+          <span class="text-success fw-bold small">KG THIS WEEK</span>
+        </div>
+      </a>
+
+      <a href="{% url 'daily_routines' %}" class="bento-item span-4" data-aos="fade-up" data-aos-delay="200">
+        <div>
+          <div class="icon-box text-info"><i class="bi bi-calendar-event"></i></div>
+          <h3>Daily Routines</h3>
+          <p>Schedule workouts and manage your active lifestyle.</p>
+        </div>
+        <div class="progress" style="height: 8px; border-radius: 10px;">
+          <div class="progress-bar bg-info" style="width: 75%"></div>
+        </div>
+      </a>
+
+      <div class="bento-item span-6 tip-card" data-aos="fade-right">
+        <div>
+          <div class="icon-box text-white" style="background: rgba(255,255,255,0.1);"><i class="bi bi-fire"></i></div>
+          <h3>Fat Loss Protocols</h3>
+          <p>Science-backed methodologies to optimize lipid metabolism and preserve muscle tissue.</p>
+        </div>
+        <a href="#" class="btn btn-outline-light rounded-pill px-4">Review Strategy</a>
+      </div>
+
+      <div class="bento-item span-6 tip-card" style="background: linear-gradient(135deg, var(--primary), var(--secondary)); border: none;" data-aos="fade-left">
+        <div>
+          <div class="icon-box text-white" style="background: rgba(255,255,255,0.2);"><i class="bi bi-hammer"></i></div>
+          <h3 class="text-white">Hypertrophy Guides</h3>
+          <p class="text-white opacity-75">Advanced strength protocols designed for lean tissue accrual and force production.</p>
+        </div>
+        <a href="#" class="btn btn-light rounded-pill px-4">View Blueprint</a>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    AOS.init({ duration: 800, once: true });
+  </script>
+</body>
+</html>
